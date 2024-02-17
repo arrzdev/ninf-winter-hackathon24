@@ -26,7 +26,7 @@ const ProductCard = ({ productData }: any) => {
       </div>
       <div className="text-left">
         <h2 className={`text-primary-600 font-bold text-sm ${storeColorMap[productData.storeGroup]}`}>{productData.storeGroup.split("-").map(capitalizeText).join(" ")}</h2>
-        <h3 className="text-neutral-900 font-bold leading-5 mb-1 line-clamp-3">{productData.product.name}</h3>
+        <h3 className="text-[#171614] font-bold leading-5 mb-1 line-clamp-3">{productData.product.name}</h3>
         <p className="text-neutral-500 text-xs mb-0">{productData.product.quantityString}</p>
         <p className="text-neutral-500 text-xs hidden md:block">Disponível em {productData.product.storeGroupsCount} supermercado</p>
       </div>
@@ -36,7 +36,7 @@ const ProductCard = ({ productData }: any) => {
             Em <b>{productData.product.storeGroupsCount}</b> supermercado{productData.product.storeGroupsCount > 1 && "s"} desde
           </div>
           <div className="flex items-baseline">
-            <p className="font-bold my-0 leading-6 pr-1 md:text-lg">{productData.product.price / 100} <small>€</small></p>
+            <p className="font-bold my-0 leading-6 pr-1 md:text-lg text-[#171614]">{productData.product.price / 100} <small>€</small></p>
             <div className="text-neutral-500 text-xs">{productData.product.priceUnit / 100} € / Kg</div>
           </div>
         </div>
