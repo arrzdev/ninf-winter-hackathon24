@@ -1,10 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBasketShopping, faClockRotateLeft, faMagnifyingGlass, faChartPie } from '@fortawesome/free-solid-svg-icons';
-import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import './nav-bar.css';
-config.autoAddCss = false
 
 
 const NavBar = () => {
@@ -24,7 +22,7 @@ const NavBar = () => {
         <a href="/inventario">
           <FontAwesomeIcon icon={faBasketShopping} size="xl" className="text-white mx-6 py-4 navbar-icon" />
         </a>
-        <a href="/estatisticas">
+        <a href="/receipts">
           <FontAwesomeIcon icon={faChartPie} size="xl" className="text-white mx-6 py-4 navbar-icon" />
         </a>
       </div>

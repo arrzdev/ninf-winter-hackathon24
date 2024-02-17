@@ -44,3 +44,16 @@ model FileSegment {
   createdAt        DateTime    @default(now())
 }
 
+type ReceiptEntry {
+  name     String
+  price    Float
+  quantity Float
+}
+
+model Receipt {
+  id       String         @id @default(auto()) @map("_id") @db.ObjectId
+  date     String
+  total    Float
+  store    String
+  products ReceiptEntry[]
+}

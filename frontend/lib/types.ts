@@ -71,3 +71,17 @@ export interface IProductData {
   productInfo: IProductInfo;
   storePrices: IStore[];
 }
+
+export interface IReceiptEntry {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+export interface IReceipt {
+  id: string;
+  date: string;
+  store: string;
+  total: number;
+  products: IReceiptEntry[];
+}
