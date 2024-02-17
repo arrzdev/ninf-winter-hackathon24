@@ -1,14 +1,15 @@
 import { Suspense } from "react"
-import { capitalizeText } from "../utils"
+import { capitalizeText } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
-import { storeColorMap } from "../utils"
+import { storeColorMap } from "@/lib/utils"
+import { truncateText } from "@/lib/utils"
 
 const ProductCard = ({ productData }: any) => {
   console.log(productData)
   return (
     <Link href={`/product/${productData.product.slug}`}>
-      <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 ">
+      <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2">
         <div className="relative">
           <Image
             src={`https://media.kabaz.pt/images/${productData.product.imageUrl}`}
@@ -22,7 +23,7 @@ const ProductCard = ({ productData }: any) => {
         </div>
         <div className="text-left">
           <h2 className={`text-primary-600 font-bold text-sm ${storeColorMap[productData.storeGroup]}`}>{productData.storeGroup.split("-").map(capitalizeText).join(" ")}</h2>
-          <h3 className="text-[#171614] font-bold leading-5 mb-1 line-clamp-3 truncate">{productData.product.name}</h3>
+          <h3 className="text-[#171614] font-bold leading-5 mb-1 line-clamp-3">{truncateText(productData.product.name, 39)}</h3>
           <p className="text-neutral-500 text-xs mb-0">{productData.product.isBulk ? "Quantidade mínima: " + productData.product.baseQuantity + " " + productData.product.baseUnit : productData.product.quantityString}</p>
         </div>
         <div className="flex items-end justify-between col-span-2 pt-2 md:col-start-2">
