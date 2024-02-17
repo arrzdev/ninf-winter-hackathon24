@@ -11,16 +11,11 @@ import { usePathname } from 'next/navigation';
 const NavBar = () => {
 
   const pathname = usePathname();
-
-  console.log(pathname);
-
   const navColor = (path: string) => {
 
     return pathname === path ? "text-[#e6f7cd]" : "text-white";
 
   }
-
-  console.log(navColor("/receipts"))
 
   return (
     <div className="fixed bottom-0 left-0 w-full">

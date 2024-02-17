@@ -15,7 +15,7 @@ const Home = async ({ searchParams }: { searchParams: any }) => {
         <Suspense fallback={<div>Loading...</div>}>
           <SearchBar />
         </Suspense>
-          <FiltersDrawer/>
+        <FiltersDrawer/>
       </div>
       <div className="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {products.map((product: any, index: number) => (

@@ -1,21 +1,28 @@
 "use server"
 
-export const getReceipts = async() => {
+export const getReceipts = async () => {
 
-    const receipt = await fetch("http://localhost:5000/receipts");
+  try {
+    var receipt = await fetch("http://localhost:5000/receipts");
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 
-    let res = await receipt.json();
-
-    return res;
-
+  let res = await receipt.json();
+  return res;
 }
 
-export const getReceiptData = async(slug: string) => {
+export const getReceiptData = async (slug: string) => {
 
-    const receipt = await fetch(`http://localhost:5000/receipts/${slug}`);
+  try {
+    var receipt = await fetch(`http://localhost:5000/receipts/${slug}`);
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 
-    let res = await receipt.json();
-
-    return res;
+  let res = await receipt.json();
+  return res;
 
 }

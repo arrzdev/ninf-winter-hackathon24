@@ -7,6 +7,12 @@
     user-select: none;
   }
 
+  input::placeholder {
+    color: #E6F7CD;
+    opacity: 1;
+    /* Firefox */
+  }
+
   /* disable default border on inputs */
   input:focus{
     outline: none !important;
