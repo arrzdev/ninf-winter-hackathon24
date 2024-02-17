@@ -59,6 +59,7 @@ export const getProductsSearch = async (searchQuery: string) => {
     const json_data = html.substring(init_data + init_tag.length, end_data);
     const endpoint_data = JSON.parse(json_data);
     hits = endpoint_data.props.pageProps.serverState.initialResults.Products.results[0].hits;
+    console.log(hits[0])
     // const hitNames: string[] = hits.map((hit: { product: { name: string; }; }) => hit.product.name);
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -66,4 +67,33 @@ export const getProductsSearch = async (searchQuery: string) => {
   }
 
   return hits;
+}
+
+export const getProductData = async (productSlug: string) => {
+  const url: string = `https://www.kabaz.pt/products/${productSlug}`;
+
+  var productData = {}
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    const init_tag = "<script id=\"__NEXT_DATA__\" type=\"application/json\">";
+    const init_data = html.indexOf(init_tag);
+    const end_tag = "</script>";
+    const end_data = html.indexOf(end_tag, init_data);
+    const json_data = html.substring(init_data + init_tag.length, end_data);
+    const endpoint_data = JSON.parse(json_data);
+
+    const productInfo = endpoint_data.props.pageProps.trpcState.queries[3].state.data
+    const storePrices = endpoint_data.props.pageProps.trpcState.queries[4].state.data
+
+    productData = {
+      productInfo: productInfo,
+      storePrices: storePrices
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    productData = {};
+  }
+
+  return productData;
 }

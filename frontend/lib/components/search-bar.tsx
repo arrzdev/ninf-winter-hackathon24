@@ -70,8 +70,8 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex items-center px-2 py-2 bg-[#AFBE8F] rounded-lg text-[#171614] font-semibold text-lg text-left">
-      <SearchIcon width={35} className="p-1 text-[#171614]" />
+    <div className="w-full flex items-center px-2 py-2 bg-[#AFBE8F] rounded-lg text-white font-semibold text-lg text-left">
+      <SearchIcon width={35} className="p-1 text-white" />
       <input
         ref={searchBarRef}
         type="text"
@@ -82,7 +82,7 @@ const SearchBar: React.FC = () => {
       />
       {showClearButton && (
         <button
-          className="text-[#171614] font-semibold text-lg rounded-full border-solid border-2 border-[#171614] w-8 h-8 ml-auto text-center align-middle"
+          className="text-white font-semibold text-lg rounded-full border-solid border-2 border-white w-8 h-8 ml-auto text-center align-middle"
           onClick={clearInput}
         >
           ×

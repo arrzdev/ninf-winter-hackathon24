@@ -12,7 +12,7 @@ const NavBar = () => {
     <div className="fixed bottom-0 left-0 w-full">
       <div className="bg-[#afbe8f] p-4 rounded-t-3xl flex justify-center items-center">
 
-        <a href="/produtos">
+        <a href="/products">
           <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" className="text-white mx-6 py-4 navbar-icon" />
         </a>
         <a href="/historico">

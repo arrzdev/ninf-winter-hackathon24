@@ -10,11 +10,11 @@ const Loading = () => {
           <SearchBar />
         </Suspense>
         <div className="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {
-              [...Array(20)].map((_, index: number) => (
-                <ProductSkeleton key={index}/>
-              ))
-            }
+          {
+            [...Array(20)].map((_, index: number) => (
+              <ProductSkeleton key={index}/>
+            ))
+          }
         </div>
       </div>
     </div>

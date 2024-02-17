@@ -19,3 +19,11 @@ export const capitalizeText = (text: string) => {
 export const bufferToB64 = (buffer: ArrayBuffer) => {
   return Buffer.from(buffer).toString("base64");
 }
+
+export const storeColorMap: { [key: string]: string } = {
+  "continente": "text-[#E40517]",
+  "auchan": "text-[#FF0015]",
+  "pingo-doce": "text-[#7EC340]",
+  "el-corte-ingles": "text-[#008C2E]",
+  "minipreco": "text-[#005098]"
+}

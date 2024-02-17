@@ -58,7 +58,7 @@ export default function RootLayout({
   return (
     <html>
       <body className="h-full bg-[#e6f7cd]">
-        {children}
+          {children}
         <NavBar />
       </body>
     </html>
