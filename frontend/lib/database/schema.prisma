@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  username   String    @unique
+  password   String
+  role       Role      @default(user)
+  avatarId   String?   @db.ObjectId
+  
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum Role {
+  user
+  admin
+}
+
+model File {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  size          Float
+  mimeType      String
+  uploadedById  String      @db.ObjectId
+
+  createdAt     DateTime    @default(now())
+}
+
+model FileSegment {
+  id               String      @id @default(auto()) @map("_id") @db.ObjectId
+  fileId     String      @db.ObjectId
+  b64BufferSegment String
+
+  createdAt        DateTime    @default(now())
+}
+

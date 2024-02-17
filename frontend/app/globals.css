@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    user-select: none;
+  }
+
+  /* disable default border on inputs */
+  input:focus{
+    outline: none !important;
+  }
+}
