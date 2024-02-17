@@ -1,0 +1,12 @@
+/* navbar icon class */
+.navbar-icon {
+    transition: transform 0.3s ease; /* Add a smooth transition effect */
+}
+
+.navbar-icon:hover {
+    transform: scale(1.25);
+}
+
+.navbar-icon:active {
+    transform: scale(1.25);
+}

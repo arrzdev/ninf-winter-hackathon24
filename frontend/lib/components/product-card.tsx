@@ -12,7 +12,7 @@ const ProductCard = ({ productData }: any) => {
   }
 
   return (
-    <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 border-solid border-2 border-[#171614]">
+    <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 ">
       <div className="relative">
         <Image
           src={`https://media.kabaz.pt/images/${productData.product.imageUrl}`}
@@ -40,7 +40,7 @@ const ProductCard = ({ productData }: any) => {
             <div className="text-neutral-500 text-xs">{productData.product.priceUnit / 100} € / Kg</div>
           </div>
         </div>
-        <button type="button" className="border-solid border-2 border-[#171614] px-2 rounded-md bg-[#DDE392]">Adicionar</button>
+        <button type="button" className="p-2 px-4 rounded-md bg-[#DDE392]">Adicionar</button>
       </div>
     </div>
   )
@@ -48,7 +48,7 @@ const ProductCard = ({ productData }: any) => {
 
 export const ProductSkeleton = () => {
   return (
-    <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 border-solid border-2 border-[#171614]">
+    <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2">
       <div>
         <div className="w-full h-80px bg-gray-200 animate-pulse rounded-md">
           <br />
@@ -70,7 +70,7 @@ export const ProductSkeleton = () => {
           <div className="text-neutral-500 text-xs bg-gray-200 animate-pulse w-48 h-3 rounded-md">
             </div>
         </div>
-        <button type="button" className="border-solid border-2 px-2 rounded-md w-24 h-8 bg-gray-200 animate-pulse rounded-md"></button>
+        <button type="button" className="px-2 rounded-md w-24 h-8 bg-gray-200 animate-pulse rounded-md"></button>
       </div>
     </div>
   )

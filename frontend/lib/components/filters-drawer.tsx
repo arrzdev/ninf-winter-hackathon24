@@ -13,7 +13,11 @@ import {
 } from "@/lib/components/ui/drawer"
 import { Checkbox } from './ui/checkbox'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import { config } from '@fortawesome/fontawesome-svg-core'
+config.autoAddCss = false
 
 
 const FiltersDrawer = () => {
@@ -22,12 +26,13 @@ const FiltersDrawer = () => {
   const router = useRouter();
 
   const updateQueryString = useCallback(
+
     (name: string, value: string) => {
+      
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
 
-      router.push(pathname + "?" + params.toString());
-
+      // router.push(pathname + "?" + params.toString());
       //this re-triggers the skeletons 
       window.location.reload();
     },
@@ -52,6 +57,8 @@ const FiltersDrawer = () => {
   const categoryFilters: string[] = [];
 
   const updateFilter = (filterName: string, state: boolean | string, type: "category" |"supermarket") => {
+
+  
     if (type === "category") {
       if (state && !categoryFilters.includes(filterName)) {
         categoryFilters.push(filterName);
@@ -69,7 +76,7 @@ const FiltersDrawer = () => {
   }
 
   const pushFilterUpdates = () => {
-    console.log(superMarketFilters)
+
     let supermarketParam = "";
     for (let supermarket of superMarketFilters) {
       supermarketParam += supermarket + ",";
@@ -93,7 +100,9 @@ const FiltersDrawer = () => {
 
   return (
     <Drawer onClose={() => pushFilterUpdates()}>
-      <button type="button" className="border-solid border-2 border-[#171614] px-2 rounded-md bg-[#DDE392]"><DrawerTrigger>Open</DrawerTrigger></button>
+      <DrawerTrigger className="shadow ml-2 px-4 rounded-md bg-[#afbe8f]">
+        <FontAwesomeIcon icon={faFilter} size="lg" className="text-white px-1 py-2" />
+      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle className='text-[#171614]'>Aqui podes modificar os teus filtros para encontrares o que mais gostas!</DrawerTitle>

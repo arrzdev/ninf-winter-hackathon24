@@ -26,4 +26,3 @@ if __name__ == "__main__":
             data.append(entry)
     
     print(data)
-    

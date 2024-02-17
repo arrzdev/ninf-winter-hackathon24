@@ -11,24 +11,19 @@ const Home = async ({ searchParams }: { searchParams: any }) => {
 
   return (
     <div className="mb-14 p-6 text-center">
-      <div className="space-y-4">
+      <div className="flex justify-center mb-6 p-0">
         <Suspense fallback={<div>Loading...</div>}>
           <SearchBar />
         </Suspense>
-        <FiltersDrawer/>
-        <div className="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {
-              products.map((product: any, index: number) => (
-                <ProductCard
-                  key={index}
-                  productData={product}
-                />
-              ))
-            }
-        </div>
+          <FiltersDrawer/>
+      </div>
+      <div className="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        {products.map((product: any, index: number) => (
+          <ProductCard key={index} productData={product} />
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default Home;

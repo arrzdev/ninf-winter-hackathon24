@@ -70,7 +70,7 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center px-2 py-2 bg-[#AFBE8F] rounded-lg border-solid border-2 border-[#171614] text-[#171614] font-semibold text-lg text-left">
+    <div className="w-full flex items-center px-2 py-2 bg-[#AFBE8F] rounded-lg text-[#171614] font-semibold text-lg text-left">
       <SearchIcon width={35} className="p-1 text-[#171614]" />
       <input
         ref={searchBarRef}

@@ -1,5 +1,6 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
+import NavBar from '@/lib/components/nav-bar'
 
 const APP_NAME = "PWA App";
 const APP_DEFAULT_TITLE = "My Awesome PWA App";
@@ -58,6 +59,7 @@ export default function RootLayout({
     <html>
       <body className="h-full bg-[#e6f7cd]">
         {children}
+        <NavBar />
       </body>
     </html>
   )
