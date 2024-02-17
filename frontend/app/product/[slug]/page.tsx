@@ -7,7 +7,6 @@ import StorePriceCard from '@/lib/components/store-price-card'
 
 const ProductPage = async ({ params }: any) => {
   const productData = await getProductData(params.slug) as IProductData
-
   return (
     <div className="relative">
       <div className="flex flex-col justify-between space-y-6 p-5 md:space-y-8 xl:sticky xl:top-24 xl:min-h-[calc(100vh_-_var(--topbarHeight))] xl:px-10 xl:py-12">

@@ -3,10 +3,7 @@
 import React, { useCallback, useState } from 'react'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -16,93 +13,60 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { config } from '@fortawesome/fontawesome-svg-core'
-config.autoAddCss = false
-
+import { capitalizeText } from '@/lib/utils';
 
 const FiltersDrawer = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const updateQueryString = useCallback(
+  //save to abort if no changes
+  const initialSearchParams = searchParams.toString();
 
-    (name: string, value: string) => {
-      
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
+  //use states to keep track of the filters
+  const [categoryFilter, setCategoryFilter] = useState<string>(searchParams.get("category") || "");
+  const [sortFilter, setSortFilter] = useState<string>(searchParams.get("sort") || "Products");
+  const superMarketFilters = searchParams.get("supermarket")?.split(",") || [];
 
-      router.push(pathname + "?" + params.toString());
-      //this re-triggers the skeletons 
-      window.location.reload();
-    },
-    [searchParams]
-  )
-
-  const deleteQueryString = useCallback(
-    (name: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.delete(name)
-
-      router.push(pathname + "?" + params.toString());
-
-      console.log(pathname + "?" + params.toString());
-      //this re-triggers the skeletons 
-      window.location.reload();
-    },
-    [searchParams]
-  )
-
-
-  const superMarketFilters: string[] = [];
-  const categoryFilters: string[] = [];
-
-  const updateFilter = (filterName: string, state: boolean | string, type: "category" | "supermarket") => {
-    
-    if (type === "category") {
-      if (state && !categoryFilters.includes(filterName)) {
-        categoryFilters.push(filterName);
-      } else {
-        categoryFilters.splice(categoryFilters.indexOf(filterName), 1);
-      }
-    }
-    if (type === "supermarket") {
-      if (state && !superMarketFilters.includes(filterName)) {
-        superMarketFilters.push(filterName);
-      } else {
-        superMarketFilters.splice(superMarketFilters.indexOf(filterName), 1);
-      }
+  const updateSuperMarketFilter = (filterName: string, state: boolean | string) => {
+    if (state && !superMarketFilters.includes(filterName)) {
+      superMarketFilters.push(filterName);
+    } else {
+      superMarketFilters.splice(superMarketFilters.indexOf(filterName), 1);
     }
   }
 
   const pushFilterUpdates = () => {
+    const params = new URLSearchParams(searchParams.toString());
 
-    let supermarketParam = "";
-    for (let supermarket of superMarketFilters) {
-      supermarketParam += supermarket + ",";
-      console.log(supermarketParam)
-    }
-    if (supermarketParam.length > 0) {
-      updateQueryString("supermarket", supermarketParam.substring(0, supermarketParam.length - 1));
-    } else {
-      deleteQueryString("supermarket");
+    //clean up
+    params.delete("category");
+    params.delete("supermarket");
+    params.delete("sort");
+
+    
+    if (categoryFilter !== "") {
+      params.set("category", categoryFilter);
     }
 
-    let categoryParam = "";
-    for (let category of categoryFilters) {
-      categoryParam += category + ",";
-      console.log(categoryParam)
+    if (superMarketFilters.length > 0) {
+      params.set("supermarket", superMarketFilters.join(","));
     }
-    if (categoryParam.length > 0) {
-      updateQueryString("category", categoryParam.substring(0, categoryParam.length - 1));
-    } else {
-      deleteQueryString("category");
+
+    if (sortFilter !== "") {
+      params.set("sort", sortFilter);
     }
+
+    //abort if no changes
+    if (initialSearchParams === params.toString()) return;
+
+    const newUrl = pathname + "?" + params.toString();
+    router.push(newUrl);
+    window.location.reload();
   }
 
   const capitalizeAndReplace = (str: string) => {
-    return str.replace(/-/g, ' ')          // Replace "-" with " "
-              .replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter of each word
+    return str.split("-").map(capitalizeText).join(" ");
   }
 
   return (
@@ -115,33 +79,57 @@ const FiltersDrawer = () => {
           <DrawerTitle className='text-white'>Aqui podes modificar os teus filtros para encontrares o que mais gostas!</DrawerTitle>
         </DrawerHeader>
 
-        <div className="text-white flex-col items-center space-x-2 p-6">
-
-          <h3 className="font-bold">Categorias</h3>
-          {["alternativas-alimentares", "animais", "bebés", "bebidas", "bricolage-auto-e-jardim", "casa", "charcutaria", "congelados", "frutas-e-legumes", "higiene-e-beleza", "laticínios-e-ovos", "lazer", "mercearia", "padaria-e-pastelaria", "talho-e-peixaria"].map((category) => (
-            <div className="flex items-center space-x-2 space-y-2 px-6">
-              <Checkbox id={category} onCheckedChange={(state) => updateFilter(category, state, "category")} />
-              <label
-                htmlFor={category}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {capitalizeAndReplace(category)}
-              </label>
-            </div>
-          ))}
-
-          <h3 className="font-bold">Supermercados</h3>
-          {["el-corte-inglés", "continente", "pingo-doce", "auchan"].map((supermarket) => (
-            <div className="flex items-center space-x-2 space-y-2 px-6 align-middle">
-              <Checkbox id={supermarket} onCheckedChange={(state) => updateFilter(supermarket, state, "supermarket")}/>
-              <label
-                htmlFor={supermarket}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {capitalizeAndReplace(supermarket)}
-              </label>
-            </div>
-          ))}
+        <div className="space-y-4">
+          <div className="text-white flex-col items-center space-x-2 px-6">
+            <h3 className="font-bold text-2xl">Ordenar</h3>
+            {[["Relevância", "Products"], ["Menor Preço", "VirtualProductsPriceAsc"], ["Maior Preço", "VirtualProductsPriceDesc"], ["Menor Preço por L/Kg", "VirtualProductsPriceUnitAsc"], ["Maior Preço por L/Kg", "VirtualProductsPriceUnitDesc"]].map(([label, filter], index) => (
+              <div className="flex items-left space-x-2 space-y-2 text-left mr-4" key={index}>
+                <Checkbox id={filter} className='mt-1 w-5 h-5' checked={sortFilter == filter} 
+                onCheckedChange={(state) => {
+                  state ? setSortFilter(filter) : setSortFilter("");
+                }}
+                />
+                <label
+                  htmlFor={filter}
+                  className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {capitalizeAndReplace(label)}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="text-white flex-col items-center space-x-2 px-6">
+            <h3 className="font-bold text-2xl">Categorias</h3>
+            {["alternativas-alimentares", "animais", "bebés", "bebidas", "bricolage-auto-e-jardim", "casa", "charcutaria", "congelados", "frutas-e-legumes", "higiene-e-beleza", "laticínios-e-ovos", "lazer", "mercearia", "padaria-e-pastelaria", "talho-e-peixaria"].map((category, index) => (
+              <div className="flex items-left space-x-2 space-y-2 text-left mr-4" key={index}>
+                <Checkbox id={category} className='mt-1 w-5 h-5' checked={categoryFilter == category}
+                  onCheckedChange={(state) => {
+                    state ? setCategoryFilter(category) : setCategoryFilter("");
+                  }} />
+                <label
+                  htmlFor={category}
+                  className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {capitalizeAndReplace(category)}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="text-white flex-col items-center space-x-2 px-6 pb-10">
+            <h3 className="font-bold text-2xl">Supermercados</h3>
+            {["el-corte-inglés", "continente", "pingo-doce", "auchan"].map((supermarket, index) => (
+              <div className="flex items-left space-x-2 space-y-2 text-left mr-4" key={index}>
+                <Checkbox id={supermarket} className='mt-1 w-5 h-5' defaultChecked={superMarketFilters.includes(supermarket)}
+                  onCheckedChange={(state) => updateSuperMarketFilter(supermarket, state)} />
+                <label
+                  htmlFor={supermarket}
+                  className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {capitalizeAndReplace(supermarket)}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

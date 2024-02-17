@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import FiltersDrawer from "@/lib/components/filters-drawer";
 
 const Home = async ({ searchParams }: { searchParams: any }) => {
-  const products = await getProductsSearch(searchParams.q || "");
+  const products = await getProductsSearch(searchParams);
 
   return (
     <div className="mb-14 p-6 text-center">

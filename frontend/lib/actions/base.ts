@@ -18,39 +18,40 @@ import { revalidatePath } from "next/cache";
 // }
 
 
-export const getProductsSearch = async (searchQuery: string) => {
-  const categories: string[] = [
-    "alternativas-alimentares",
-    "animais",
-    "bebés",
-    "bebidas",
-    "bricolage-auto-e-jardim",
-    "casa",
-    "charcutaria",
-    "congelados",
-    "frutas-e-legumes",
-    "higiene-e-beleza",
-    "laticínios-e-ovos",
-    "lazer",
-    "mercearia",
-    "padaria-e-pastelaria",
-    "talho-e-peixaria"
-  ];
+export const getProductsSearch = async (searchParams: {
+  category?: string;
+  supermarket?: string;
+  sort?: string;
+  q?: string;
+}) => {
+  // Base url
+  let urlToScrape: string = "https://www.kabaz.pt/search";
 
-  const supermercados: string[] = [
-    "el-corte-inglés",
-    "continente",
-    "pingo-doce",
-    "auchan"
-  ];
+  if (searchParams.category) {
+    urlToScrape += `/c/${searchParams.category}`;
+  }
 
-  // URL to scrape
-  const url: string = `https://www.kabaz.pt/search?q=${searchQuery}`;
+  if (searchParams.supermarket) {
+    urlToScrape += `/loja/${searchParams.supermarket}`;
+  }
+
+  if (searchParams.q) {
+    urlToScrape += `?q=${searchParams.q}`;
+  }
+
+  if (searchParams.sort) {
+    if (searchParams.q) {
+      urlToScrape += `&ordem=${searchParams.sort}`;
+    }
+    else {
+      urlToScrape += `?ordem=${searchParams.sort}`;
+    }
+  }
 
   // Fetch the data and return the list of hits
   var hits = []
   try {
-    const response = await fetch(url);
+    const response = await fetch(urlToScrape);
     const html = await response.text();
     const init_tag = "<script id=\"__NEXT_DATA__\" type=\"application/json\">";
     const init_data = html.indexOf(init_tag);
@@ -59,7 +60,6 @@ export const getProductsSearch = async (searchQuery: string) => {
     const json_data = html.substring(init_data + init_tag.length, end_data);
     const endpoint_data = JSON.parse(json_data);
     hits = endpoint_data.props.pageProps.serverState.initialResults.Products.results[0].hits;
-    console.log(hits[0])
     // const hitNames: string[] = hits.map((hit: { product: { name: string; }; }) => hit.product.name);
   } catch (error) {
     console.error('Error fetching data:', error);

@@ -6,7 +6,6 @@ import { storeColorMap } from "@/lib/utils"
 import { truncateText } from "@/lib/utils"
 
 const ProductCard = ({ productData }: any) => {
-  console.log(productData)
   return (
     <Link href={`/product/${productData.product.slug}`}>
       <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2">
