@@ -1,6 +1,17 @@
 import os
 import continente as cnt
 import pingo_doce as pd
+from pymongo import MongoClient
+
+def save_to_db(data):
+    client = MongoClient('localhost', 27017)
+    db = client['receipts']
+    collection = db['receipts']
+
+    for entry in data:
+        collection.insert_one(entry)
+
+    client.close()
 
 def scrape_pdf(directory, filename):
     if directory == "continente":
@@ -25,4 +36,4 @@ if __name__ == "__main__":
             entry = scrape_pdf(directory, f"receipts/{directory}/{filename}")
             data.append(entry)
     
-    print(data)
+    save_to_db(data)

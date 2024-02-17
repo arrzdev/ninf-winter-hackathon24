@@ -22,10 +22,10 @@ def scrape_pdf(filename):
     products = re.split(pattern, content)[1:]
     
     # products on sale (Poupança Imediata)
-    sale_filter = r"^ +[A-Z] +\d+% +(.*\w) +(\d+,\d{2}) *\n +Poupança Imediata +\((\d+,\d{2})\)"
+    sale_filter = r"^ +[A-Z] +\d+% +(.*\w) +(\d+,\d{2}) *\n +(Poupança Imediata) +\((\d+,\d{2})\)"
 
     # products that are counted
-    count_filter = r"^ [A-Z] +\d+% (\S(?: ?\S)*) +\n .*(\d+,\d{2}) $"
+    count_filter = r"^ [A-Z] +\d+% (\S(?: ?\S)*) +\n +(\d+,\d{3}) X (\d+,\d{2}) +\d,\d{2} $"
 
     # regular products
     regular_filter = r"^ [A-Z] +\d+% (\S(?: ?\S)*) +(\d+,\d{2}) +$"
@@ -38,19 +38,37 @@ def scrape_pdf(filename):
     for i in range(len(filtered_products)):
         filtered_products[i] = list(filter(None, filtered_products[i]))
 
-    products_dict = {}
+    parsed_products = []
 
     for p in filtered_products:
-        # adjust price for items on sale
+
+        # items on sale
+        if len(p) == 4 and p[2] == "Poupança Imediata":
+            full_price = float(p[1].replace(',', '.'))
+            discount = float(p[3].replace(',', '.'))
+            parsed_p = {
+                "name": p[0],
+                "price": round(full_price - discount, 2),
+                "quantity": 1
+            }
+        # products with multiple quantities
         if len(p) == 3:
-            price = float(p[1].replace(',', '.'))
-            discount = float(p[2].replace(',', '.'))
-            products_dict[p[0]] = round(price - discount, 2)
+            parsed_p = {
+                "name": p[0],
+                "price": float(p[2].replace(',', '.')),
+                "quantity": float(p[1].replace(',', '.'))
+            }
         else:
-            products_dict[p[0]] = float(p[1].replace(',', '.'))
+            parsed_p = {
+                "name": p[0],
+                "price": float(p[1].replace(',', '.')),
+                "quantity": 1
+            }
+        
+        parsed_products.append(parsed_p)
 
     return {
         "date": data,
         "total": total,
-        "products": products_dict
+        "products": parsed_products
     }

@@ -3,6 +3,9 @@ import re
 
 # run for each pdf file using PdfReader
 def scrape_pdf(filename):
+
+    print(filename)
+
     reader = PyPDF2.PdfReader(filename)
     
     text = reader.pages[0].extract_text()
@@ -40,14 +43,36 @@ def scrape_pdf(filename):
             products.pop(i+1)
             break
 
-    products_dict = {}
+    count_filter = r"^\([A-Z]\) *(\S(?: ?\S)*) *\n *(\d+) X (\d+,\d{2}) \d+,\d{2} *$"
+    regular_filter = r"^\([A-Z]\) *(\S(?: ?\S)*) (\d+,\d{2})$"
+    all_filters = re.compile(f"{count_filter}|{regular_filter}", re.MULTILINE)
+    
+    filtered_products = re.findall(all_filters, content)
 
-    for product in products:
-        name, price = re.split(r'(.+) (\d+,\d{2})', product)[1:3]
-        products_dict[name] = float(price.replace(',', '.'))
+    # remove empty strings
+    for i in range(len(filtered_products)):
+        filtered_products[i] = list(filter(None, filtered_products[i]))
+    
+    parsed_products = []
+
+    for p in filtered_products:
+        # products with multiple quantities
+        if len(p) == 3:
+            parsed_p = {
+                "name": p[0],
+                "price": float(p[2].replace(',', '.')),
+                "quantity": int(p[1])
+            }
+        else:
+            parsed_p = {
+                "name": p[0],
+                "price": float(p[1].replace(',', '.')),
+                "quantity": 1
+            }
+        parsed_products.append(parsed_p)
     
     return {
         "date": date,
         "total": total,
-        "products": products_dict
+        "products": parsed_products
     }
