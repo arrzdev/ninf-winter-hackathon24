@@ -1,1 +1,4 @@
-*/venv
+# Backend
+venv/
+__pycache__/
+receipts/
