@@ -13,7 +13,10 @@ const nextConfig = withPWA({
     serverActions: {
       bodySizeLimit: '5mb', //allow most of the images to be uploaded
     },
-  }
+  },
+  images: {
+    domains: ["media.kabaz.pt"],
+  },
 });
 
 module.exports = nextConfig;

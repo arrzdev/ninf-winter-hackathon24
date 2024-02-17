@@ -1,59 +1,78 @@
-import { CardContent, CardFooter, Card } from "@/lib/components/ui/card"
-import { Button } from "@/lib/components/ui/button"
+import { Suspense } from "react"
+import { capitalizeText } from "../utils"
+import Image from "next/image"
 
-const ProductCard = ({productData}:any) => {
-  console.log(productData)
+const ProductCard = ({ productData }: any) => {
+  const storeColorMap: { [key: string]: string } = {
+    "continente": "text-[#E40517]",
+    "auchan": "text-[#FF0015]",
+    "pingo-doce": "text-[#7EC340]",
+    "el-corte-ingles": "text-[#008C2E]",
+    "minipreco": "text-[#005098]"
+  }
+
   return (
-    <Card className="w-[344px] rounded-lg shadow-md overflow-hidden bg-[#16181A] border-solid border-2 border-[#ffffff26] ">
-      <div className="bg-[#f8f9fa] p-2 text-sm font-semibold text-red-600">Desc./Poupança até 8%</div>
-      <img
-        alt={productData.product.name}
-        className="w-full px-4 rounded-lg"
-        height="200"
-        src={`https://media.kabaz.pt/images/${productData.product.imageUrl}`}
-        style={{
-          aspectRatio: "344/200",
-          objectFit: "cover",
-        }}
-        width="344"
-      />
-      <CardContent className="p-4">
-        <div className="text-lg font-bold text-left text-purple-400">{productData.storeGroup[0].toUpperCase() + productData.storeGroup.slice(1)}</div>
-        <div className="text-lg font-bold">{productData.product.name}</div>
-        <div className="text-sm text-gray-500">{productData.product.quantityString}</div>
-        <div className="text-sm text-gray-500 mb-4">Disponível em {productData.product.storeGroupsCount} supermercados</div>
-        <div className="flex justify-between items-center">
-          <div className="text-2xl font-bold text-red-600">{productData.product.price / 100} €</div>
-          <div className="text-sm text-gray-500">{productData.product.priceUnit / 100} € / Kg</div>
+    <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 border-solid border-2 border-[#171614]">
+      <div className="relative">
+        <Image
+          src={`https://media.kabaz.pt/images/${productData.product.imageUrl}`}
+          alt="..."
+          width={240}
+          height={240}
+          quality={40}
+          placeholder="empty"
+          className="aspect-square bg-#FFF object-center w-full hover:scale-105 transition-opacity duration-300 ease-in-out"
+        />
+      </div>
+      <div className="text-left">
+        <h2 className={`text-primary-600 font-bold text-sm ${storeColorMap[productData.storeGroup]}`}>{productData.storeGroup.split("-").map(capitalizeText).join(" ")}</h2>
+        <h3 className="text-neutral-900 font-bold leading-5 mb-1 line-clamp-3">{productData.product.name}</h3>
+        <p className="text-neutral-500 text-xs mb-0">{productData.product.quantityString}</p>
+        <p className="text-neutral-500 text-xs hidden md:block">Disponível em {productData.product.storeGroupsCount} supermercado</p>
+      </div>
+      <div className="flex items-end justify-between col-span-2 pt-2 md:col-start-2">
+        <div>
+          <div className="text-neutral-400 text-md whitespace-nowrap">
+            Em <b>{productData.product.storeGroupsCount}</b> supermercado{productData.product.storeGroupsCount > 1 && "s"} desde
+          </div>
+          <div className="flex items-baseline">
+            <p className="font-bold my-0 leading-6 pr-1 md:text-lg">{productData.product.price / 100} <small>€</small></p>
+            <div className="text-neutral-500 text-xs">{productData.product.priceUnit / 100} € / Kg</div>
+          </div>
         </div>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center p-4 border-t">
-        <Button variant="ghost">Adicionar</Button>
-        <ShoppingCartIcon className="text-gray-500" />
-      </CardFooter>
-    </Card>
+        <button type="button" className="border-solid border-2 border-[#171614] px-2 rounded-md bg-[#DDE392]">Adicionar</button>
+      </div>
+    </div>
   )
 }
 
-
-const ShoppingCartIcon = (props:any) => {
+export const ProductSkeleton = () => {
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="8" cy="21" r="1" />
-      <circle cx="19" cy="21" r="1" />
-      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
-    </svg>
+    <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 border-solid border-2 border-[#171614]">
+      <div>
+        <div className="w-full h-80px bg-gray-200 animate-pulse rounded-md">
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      </div>
+      <div className="text-left">
+        <div className="text-primary-600 font-bold text-sm bg-gray-200 animate-pulse w-20 h-3 mb-2 rounded-md"></div>
+        <div className="text-neutral-900 font-bold leading-5 mb-1 line-clamp-3 bg-gray-200 animate-pulse w-full h-4 rounded-md"></div>
+        <div className="text-neutral-900 font-bold leading-5 mb-1 line-clamp-3 bg-gray-200 animate-pulse w-full h-4 rounded-md"></div>
+        <div className="text-neutral-500 text-xs mb-0 bg-gray-200 animate-pulse w-1/4 h-2 rounded-md"></div>
+        <div className="text-neutral-500 text-xs hidden md:block bg-gray-200 animate-pulse w-3/4 h-4 rounded-md"></div>
+      </div>
+      <div className="flex items-end justify-between col-span-2 pt-2 md:col-start-2">
+        <div className="space-y-1">
+          <div className="text-neutral-400 text-md whitespace-nowrap bg-gray-200 animate-pulse w-full h-4 rounded-md"></div>
+          <div className="text-neutral-500 text-xs bg-gray-200 animate-pulse w-48 h-3 rounded-md">
+            </div>
+        </div>
+        <button type="button" className="border-solid border-2 px-2 rounded-md w-24 h-8 bg-gray-200 animate-pulse rounded-md"></button>
+      </div>
+    </div>
   )
 }
 

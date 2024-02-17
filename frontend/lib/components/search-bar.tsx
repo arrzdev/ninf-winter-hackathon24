@@ -1,49 +1,79 @@
 "use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { SearchIcon } from '@/lib/icons/SearchIcon';
+import { debounce } from 'lodash';
 
 const SearchBar: React.FC = () => {  
   const pathname = usePathname()
   const searchParams = useSearchParams();
   const router = useRouter();
+  const searchBarRef = useRef<HTMLInputElement>(null);
   
   const [showClearButton, setShowClearButton] = useState(searchParams.get("q") ? true : false);
   
-  const createQueryString = useCallback(
+  const updateQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
 
-      return params.toString()
+      router.push(pathname + "?" + params.toString());
+
+      //this re-triggers the skeletons 
+      window.location.reload();  
+    },
+    [searchParams]
+  )
+
+  const deleteQueryString = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.delete(name)
+
+      router.push(pathname + "?" + params.toString());
+
+      //this re-triggers the skeletons 
+      window.location.reload(); 
     },
     [searchParams]
   )
 
   const inputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    debouncedInputOnChange(e.target.value);
+  };
+
+  const debouncedInputOnChange = useCallback(debounce((value: string) => {
     if (value.length > 0) {
       setShowClearButton(true);
     } else {
       setShowClearButton(false);
     }
-    
-    //debounce here
-    router.push(pathname + '?' + createQueryString('q', value))
-  };
+
+    //update the query string
+    updateQueryString('q', value);
+
+    // window.location.search = createQueryString('q', value)
+  }, 600), []);  // 300ms delay
 
   const clearInput = () => {
-    router.push(pathname);
+    deleteQueryString('q');
+
+    //clear input
+    if (searchBarRef.current) {
+      searchBarRef.current.value = "";
+    }
+    
     setShowClearButton(false);
   };
 
   return (
-    <div className="flex items-center px-2 py-2 bg-[#16181A] rounded-lg border-solid border-2 border-[#ffffff26] text-[#9BA1A6] font-semibold text-lg text-left">
-      <SearchIcon width={35} className="p-1" />
+    <div className="flex items-center px-2 py-2 bg-[#AFBE8F] rounded-lg border-solid border-2 border-[#171614] text-[#171614] font-semibold text-lg text-left">
+      <SearchIcon width={35} className="p-1 text-[#171614]" />
       <input
+        ref={searchBarRef}
         type="text"
         placeholder="Pesquisa por produtos.."
         className="bg-transparent pl-1 w-full focus:outline-none"
@@ -52,7 +82,7 @@ const SearchBar: React.FC = () => {
       />
       {showClearButton && (
         <button
-          className="text-[#9BA1A6] font-semibold text-lg rounded-full border-solid border-2 border-[#ffffff26] w-8 h-8 ml-auto pb-1 text-center align-middle"
+          className="text-[#171614] font-semibold text-lg rounded-full border-solid border-2 border-[#171614] w-8 h-8 ml-auto text-center align-middle"
           onClick={clearInput}
         >
           ×
