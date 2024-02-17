@@ -32,7 +32,7 @@ const FiltersDrawer = () => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
 
-      // router.push(pathname + "?" + params.toString());
+      router.push(pathname + "?" + params.toString());
       //this re-triggers the skeletons 
       window.location.reload();
     },
@@ -46,6 +46,7 @@ const FiltersDrawer = () => {
 
       router.push(pathname + "?" + params.toString());
 
+      console.log(pathname + "?" + params.toString());
       //this re-triggers the skeletons 
       window.location.reload();
     },
@@ -56,9 +57,8 @@ const FiltersDrawer = () => {
   const superMarketFilters: string[] = [];
   const categoryFilters: string[] = [];
 
-  const updateFilter = (filterName: string, state: boolean | string, type: "category" |"supermarket") => {
-
-  
+  const updateFilter = (filterName: string, state: boolean | string, type: "category" | "supermarket") => {
+    
     if (type === "category") {
       if (state && !categoryFilters.includes(filterName)) {
         categoryFilters.push(filterName);
@@ -80,9 +80,10 @@ const FiltersDrawer = () => {
     let supermarketParam = "";
     for (let supermarket of superMarketFilters) {
       supermarketParam += supermarket + ",";
+      console.log(supermarketParam)
     }
     if (supermarketParam.length > 0) {
-      updateQueryString("supermarket", supermarketParam);
+      updateQueryString("supermarket", supermarketParam.substring(0, supermarketParam.length - 1));
     } else {
       deleteQueryString("supermarket");
     }
@@ -90,12 +91,18 @@ const FiltersDrawer = () => {
     let categoryParam = "";
     for (let category of categoryFilters) {
       categoryParam += category + ",";
+      console.log(categoryParam)
     }
     if (categoryParam.length > 0) {
-      updateQueryString("category", categoryParam);
+      updateQueryString("category", categoryParam.substring(0, categoryParam.length - 1));
     } else {
       deleteQueryString("category");
     }
+  }
+
+  const capitalizeAndReplace = (str: string) => {
+    return str.replace(/-/g, ' ')          // Replace "-" with " "
+              .replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter of each word
   }
 
   return (
@@ -103,14 +110,14 @@ const FiltersDrawer = () => {
       <DrawerTrigger className="shadow ml-2 px-4 rounded-md bg-[#afbe8f]">
         <FontAwesomeIcon icon={faFilter} size="lg" className="text-white px-1 py-2" />
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="bg-[#afbe8f]">
         <DrawerHeader>
-          <DrawerTitle className='text-[#171614]'>Aqui podes modificar os teus filtros para encontrares o que mais gostas!</DrawerTitle>
+          <DrawerTitle className='text-white'>Aqui podes modificar os teus filtros para encontrares o que mais gostas!</DrawerTitle>
         </DrawerHeader>
 
-        <div className="flex-col items-center space-x-2 p-6">
+        <div className="text-white flex-col items-center space-x-2 p-6">
 
-          <h3>Categorias</h3>
+          <h3 className="font-bold">Categorias</h3>
           {["alternativas-alimentares", "animais", "bebés", "bebidas", "bricolage-auto-e-jardim", "casa", "charcutaria", "congelados", "frutas-e-legumes", "higiene-e-beleza", "laticínios-e-ovos", "lazer", "mercearia", "padaria-e-pastelaria", "talho-e-peixaria"].map((category) => (
             <div className="flex items-center space-x-2 space-y-2 px-6">
               <Checkbox id={category} onCheckedChange={(state) => updateFilter(category, state, "category")} />
@@ -118,12 +125,12 @@ const FiltersDrawer = () => {
                 htmlFor={category}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {category}
+                {capitalizeAndReplace(category)}
               </label>
             </div>
           ))}
 
-          <h3>Supermercados</h3>
+          <h3 className="font-bold">Supermercados</h3>
           {["el-corte-inglés", "continente", "pingo-doce", "auchan"].map((supermarket) => (
             <div className="flex items-center space-x-2 space-y-2 px-6 align-middle">
               <Checkbox id={supermarket} onCheckedChange={(state) => updateFilter(supermarket, state, "supermarket")}/>
@@ -131,7 +138,7 @@ const FiltersDrawer = () => {
                 htmlFor={supermarket}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {supermarket}
+                {capitalizeAndReplace(supermarket)}
               </label>
             </div>
           ))}
