@@ -18,8 +18,6 @@ def scrape_pdf(filename):
     # if card credit is used, the payment is under SUBTOTAL instead of TOTAL A PAGAR
     subtotal_filter = r'^SUBTOTAL +(\d+,\d{2}) *$'
     subtotal = re.findall(subtotal_filter, text, re.MULTILINE)
-    if subtotal:
-        total = float(subtotal[0].replace(',', '.'))
 
     # Categories are composed by letters, "/", "-" and ".", followed by :
     # Get categories without the ":" at the end
@@ -49,7 +47,7 @@ def scrape_pdf(filename):
             products.pop(i+1)
             break
 
-    count_filter = r"^(?:\([A-Z]\)|IS) *(\S(?: ? ?\S)*) *\n *(\d+) X (\d+,\d{2}) \d+,\d{2} *$"
+    count_filter = r"^(?:\([A-Z]\)|IS) *(\S(?: ? ?\S)*) *\n *(\d+(?:,\d{3})?) X (\d+,\d{2}) \d+,\d{2} *$"
     regular_filter = r"^(?:\([A-Z]\)|IS) *(\S(?: ? ?\S)*) (\d+,\d{2})$"
     all_filters = re.compile(f"{count_filter}|{regular_filter}", re.MULTILINE)
     
@@ -67,7 +65,7 @@ def scrape_pdf(filename):
             parsed_p = {
                 "name": p[0],
                 "price": float(p[2].replace(',', '.')),
-                "quantity": float(p[1])
+                "quantity": float(p[1].replace(',', '.'))
             }
         else:
             parsed_p = {
