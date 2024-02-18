@@ -1,9 +1,9 @@
-import { Suspense } from "react"
 import { capitalizeText } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { storeColorMap } from "@/lib/utils"
 import { truncateText } from "@/lib/utils"
+import ShortcutAddGroceriesButton from "./shortcut-add-groceries-button"
 
 const ProductCard = ({ productData }: any) => {
   return (
@@ -35,7 +35,11 @@ const ProductCard = ({ productData }: any) => {
               <div className="text-neutral-500 text-xs">{(productData.product.priceUnit / 100).toFixed(2)}€ / Kg</div>
             </div>
           </div>
-          <button type="button" className="p-2 px-4 rounded-md bg-[#DDE392]">Adicionar</button>
+          <ShortcutAddGroceriesButton groceriesEntry={{
+            slug: productData.product.slug,
+            name: productData.product.name,
+            price: productData.product.price,
+          }}/>
         </div>
       </div>
     </Link>

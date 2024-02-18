@@ -30,7 +30,7 @@ export const storeColorMap: { [key: string]: string } = {
 
 // GROCERY LIST UTILS
 // add to grocery list if already in list, increase quantity
-export const addToGroceryList = (productData: any) => {
+export const addToGroceryList = (grocerieEntry: any) => {
   //get current localstorage data
   var groceryList: string | null = localStorage.getItem('GroceryList');
 
@@ -41,16 +41,16 @@ export const addToGroceryList = (productData: any) => {
   //parse the data
   var groceryListData = JSON.parse(groceryList);
 
-  const productIndex = groceryListData.findIndex((product: any) => product.slug === productData.product.slug);
+  const productIndex = groceryListData.findIndex((product: any) => product.slug === grocerieEntry.slug);
   if (productIndex > -1) {
     //product already in the list, increase quantity
     groceryListData[productIndex].quantity += 1;
   } else {
     //add it to the list
     groceryListData.push({
-      slug: productData.product.slug,
-      name: productData.product.name,
-      price: productData.product.price,
+      slug: grocerieEntry.slug,
+      name: grocerieEntry.name,
+      price: grocerieEntry.price,
       quantity: 1,
     });
   }
@@ -60,7 +60,7 @@ export const addToGroceryList = (productData: any) => {
 }
 
 // decrease quantity of product in grocery list till 0, then remove from list
-export const removeFromGroceryList = (productData: any) => {
+export const removeFromGroceryList = (grocerieEntry: any) => {
   //get current localstorage data
   var groceryList: string | null = localStorage.getItem('GroceryList');
 
@@ -72,7 +72,7 @@ export const removeFromGroceryList = (productData: any) => {
   //parse the data
   var groceryListData = JSON.parse(groceryList);
 
-  const productIndex = groceryListData.findIndex((product: any) => product.slug === productData.product.slug);
+  const productIndex = groceryListData.findIndex((product: any) => product.slug === grocerieEntry.slug);
   if (productIndex > -1) {
     //product already in the list, decrease quantity
     groceryListData[productIndex].quantity -= 1;

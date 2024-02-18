@@ -4,6 +4,7 @@ import { getProductData } from '@/lib/actions/base'
 import { type IProductData} from '@/lib/types'
 import StoresPriceCard from '@/lib/components/stores-price-card'
 import HistoryChart from '@/lib/components/history-chart'
+import AddGroceriesButton from '@/lib/components/add-groceries-button'
 
 const ProductPage = async ({ params }: any) => {
   const productData = await getProductData(params.slug) as IProductData
@@ -21,9 +22,11 @@ const ProductPage = async ({ params }: any) => {
             height={500}
           />
           <div className='pt-4'>
-            <button type="button" className="p-2 rounded-md bg-[#DDE392] w-full border-solid border-2 border-[#AFBE8F]">
-              Adicionar à Lista de Compras +
-            </button>
+          <AddGroceriesButton groceriesEntry={{
+              slug: productData.productInfo.slug,
+              name: productData.productInfo.name,
+              price: productData.productInfo.priceMin,
+            }}/>
           </div>
       </header>
       <div className="pb-24 space-y-4">
