@@ -32,4 +32,26 @@ const ReceiptCard = ({ receiptData }: any) => {
     );
 };
 
+
+export const ReceiptSkeleton = () => {
+    return (
+        <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px,1fr,auto] gap-x-4 p-4 md:flex md:flex-col md:space-y-2 items-center">
+            <div className="relative">
+                <div className="w-full h-100px bg-gray-200 animate-pulse rounded-sm aspect-square">
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div className="flex flex-col text-left">
+                <div className="mb-1 text-lg line-clamp-3 bg-gray-200 animate-pulse w-1/2 h-4 rounded-md"></div>
+                <div className="my-1 line-clamp-3 bg-gray-200 animate-pulse w-2/5 h-4 rounded-md"></div>
+            </div>
+            <div className="flex justify-end">
+                <div className="mb-1 text-2xl line-clamp-3 bg-gray-200 animate-pulse w-full h-4 rounded-mdq"></div>
+            </div>
+        </div>
+    );
+};
+
 export default ReceiptCard;

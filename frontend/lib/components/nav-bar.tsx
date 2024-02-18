@@ -1,19 +1,21 @@
-"use client";
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faBasketShopping, faClockRotateLeft, faMagnifyingGlass, faChartPie } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faBasketShopping, faClockRotateLeft, faMagnifyingGlass, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import './nav-bar.css';
-import { usePathname } from 'next/navigation';
+import { headers } from "next/headers";
 
 
 const NavBar = () => {
 
-  const pathname = usePathname();
+  // const h = headers();
+
+  // const pathname = h.get('referer')!.split(h.get('host')!)[1];
+
   const navColor = (path: string) => {
 
-    return pathname === path ? "text-[#e6f7cd]" : "text-white";
+    // return pathname === path ? "text-white" : "text-[#e6f7cd]";
+    return "text-white";
 
   }
 
@@ -34,7 +36,7 @@ const NavBar = () => {
           <FontAwesomeIcon icon={faBasketShopping} size="xl" className={`${navColor("/shopping-cart")} mx-6 py-4 navbar-icon`} />
         </a>
         <a href="/receipts">
-          <FontAwesomeIcon icon={faChartPie} size="xl" className={`${navColor("/receipts")} mx-6 py-4 navbar-icon`} />
+          <FontAwesomeIcon icon={faReceipt} size="xl" className={`${navColor("/receipts")} mx-6 py-4 navbar-icon`} />
         </a>
       </div>
     </div>

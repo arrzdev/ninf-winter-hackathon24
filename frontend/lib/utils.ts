@@ -31,8 +31,11 @@ export const storeColorMap: { [key: string]: string } = {
 // GROCERY LIST UTILS
 // add to grocery list if already in list, increase quantity
 export const addToGroceryList = (grocerieEntry: any) => {
+
   //get current localstorage data
   var groceryList: string | null = localStorage.getItem('GroceryList');
+
+  console.log(groceryList);
 
   if (!groceryList) {
     groceryList = JSON.stringify([]);
@@ -60,7 +63,7 @@ export const addToGroceryList = (grocerieEntry: any) => {
 }
 
 // decrease quantity of product in grocery list till 0, then remove from list
-export const removeFromGroceryList = (grocerieEntry: any) => {
+export const removeFromGroceryList = (groceryEntry: any, removeAll = false) => {
   //get current localstorage data
   var groceryList: string | null = localStorage.getItem('GroceryList');
 
@@ -69,13 +72,17 @@ export const removeFromGroceryList = (grocerieEntry: any) => {
     return;
   }
 
+  console.log(removeAll);
+
   //parse the data
   var groceryListData = JSON.parse(groceryList);
 
-  const productIndex = groceryListData.findIndex((product: any) => product.slug === grocerieEntry.slug);
+  const productIndex = groceryListData.findIndex((product: any) => product.slug === groceryEntry.slug);
   if (productIndex > -1) {
     //product already in the list, decrease quantity
-    groceryListData[productIndex].quantity -= 1;
+    let remove = 1;
+    if (removeAll) remove = groceryEntry.quantity;
+    groceryListData[productIndex].quantity -= remove;
 
     //if quantity is 0, remove from list
     if (groceryListData[productIndex].quantity === 0) {
