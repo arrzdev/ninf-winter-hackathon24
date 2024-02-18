@@ -9,13 +9,12 @@ const withPWA = require("next-pwa")({
 
 const nextConfig = withPWA({
   reactStrictMode: true,
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '5mb', //allow most of the images to be uploaded
-    },
-  },
   images: {
-    domains: ["media.kabaz.pt"],
+    remotePatterns: [{
+      protocol: "https",
+      hostname: "media.kabaz.pt",
+      pathname: "**",
+    }],
   },
 });
 
