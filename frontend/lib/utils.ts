@@ -20,23 +20,84 @@ export const bufferToB64 = (buffer: ArrayBuffer) => {
   return Buffer.from(buffer).toString("base64");
 }
 
-export const getLast90Days = () => {
-  let result = [];
-  let today = new Date();
-  for (let i = 0; i <= 90; i += 10) {
-    let pastDate = new Date();
-    pastDate.setDate(today.getDate() - i);
-    let day = String(pastDate.getDate()).padStart(2, '0');
-    let month = String(pastDate.getMonth() + 1).padStart(2, '0'); // Os meses são de 0 a 11, então adicionamos 1
-    result.unshift(`${day}/${month}`);
-  }
-  return result;
-}
-
 export const storeColorMap: { [key: string]: string } = {
   "continente": "text-[#E40517]",
   "auchan": "text-[#FF0015]",
   "pingo-doce": "text-[#7EC340]",
   "el-corte-ingles": "text-[#008C2E]",
   "minipreco": "text-[#005098]"
+}
+
+// GROCERY LIST UTILS
+// add to grocery list if already in list, increase quantity
+export const addToGroceryList = (productData: any) => {
+  //get current localstorage data
+  var groceryList: string | null = localStorage.getItem('GroceryList');
+
+  if (!groceryList) {
+    groceryList = JSON.stringify([]);
+  }
+
+  //parse the data
+  var groceryListData = JSON.parse(groceryList);
+
+  const productIndex = groceryListData.findIndex((product: any) => product.slug === productData.product.slug);
+  if (productIndex > -1) {
+    //product already in the list, increase quantity
+    groceryListData[productIndex].quantity += 1;
+  } else {
+    //add it to the list
+    groceryListData.push({
+      slug: productData.product.slug,
+      name: productData.product.name,
+      price: productData.product.price,
+      quantity: 1,
+    });
+  }
+
+  //update localstorage data
+  localStorage.setItem('GroceryList', JSON.stringify(groceryListData));
+}
+
+// decrease quantity of product in grocery list till 0, then remove from list
+export const removeFromGroceryList = (productData: any) => {
+  //get current localstorage data
+  var groceryList: string | null = localStorage.getItem('GroceryList');
+
+  if (!groceryList) {
+    groceryList = JSON.stringify([]);
+    return;
+  }
+
+  //parse the data
+  var groceryListData = JSON.parse(groceryList);
+
+  const productIndex = groceryListData.findIndex((product: any) => product.slug === productData.product.slug);
+  if (productIndex > -1) {
+    //product already in the list, decrease quantity
+    groceryListData[productIndex].quantity -= 1;
+
+    //if quantity is 0, remove from list
+    if (groceryListData[productIndex].quantity === 0) {
+      groceryListData.splice(productIndex, 1);
+    }
+  }
+
+  //update localstorage data
+  localStorage.setItem('GroceryList', JSON.stringify(groceryListData));
+
+}
+
+// get grocery list from localstorage
+export const getGroceryList = () => {
+  var groceryList: string | null = localStorage.getItem('GroceryList');
+
+  if (!groceryList) return [];
+  return JSON.parse(groceryList);
+
+}
+
+// clear grocery list from localstorage
+export const clearGroceryList = () => {
+  localStorage.removeItem('GroceryList');
 }
