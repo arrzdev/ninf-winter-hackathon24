@@ -56,7 +56,7 @@ const SearchBar: React.FC = () => {
     updateQueryString('q', value);
 
     // window.location.search = createQueryString('q', value)
-  }, 600), []);  // 300ms delay
+  }, 700), []);  // 700ms delay
 
   const clearInput = () => {
     deleteQueryString('q');
