@@ -23,9 +23,11 @@ export const bufferToB64 = (buffer: ArrayBuffer) => {
 export const storeColorMap: { [key: string]: string } = {
   "continente": "text-[#E40517]",
   "auchan": "text-[#FF0015]",
+  "aldi": "text-[#00B6ED]",
   "pingo-doce": "text-[#7EC340]",
   "el-corte-ingles": "text-[#008C2E]",
-  "minipreco": "text-[#005098]"
+  "minipreco": "text-[#005098]",
+  "lidl": "text-[#005BA2]",
 }
 
 // GROCERY LIST UTILS
@@ -34,8 +36,6 @@ export const addToGroceryList = (grocerieEntry: any) => {
 
   //get current localstorage data
   var groceryList: string | null = localStorage.getItem('GroceryList');
-
-  console.log(groceryList);
 
   if (!groceryList) {
     groceryList = JSON.stringify([]);
@@ -72,8 +72,6 @@ export const removeFromGroceryList = (groceryEntry: any, removeAll = false) => {
     return;
   }
 
-  console.log(removeAll);
-
   //parse the data
   var groceryListData = JSON.parse(groceryList);
 
@@ -97,6 +95,11 @@ export const removeFromGroceryList = (groceryEntry: any, removeAll = false) => {
 
 // get grocery list from localstorage
 export const getGroceryList = () => {
+  if (typeof window === 'undefined') {
+    // We are on the server, return an empty array
+    return [];
+  }
+  
   var groceryList: string | null = localStorage.getItem('GroceryList');
 
   if (!groceryList) return [];

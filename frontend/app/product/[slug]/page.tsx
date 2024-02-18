@@ -8,7 +8,7 @@ import AddGroceriesButton from '@/lib/components/add-groceries-button'
 
 const ProductPage = async ({ params }: any) => {
   const productData = await getProductData(params.slug) as IProductData
-  
+
   return (
     <div className="relative p-6">
       <header className="flex flex-col space-y-1 bg-white p-4 rounded-b-2xl rounded-t-md border-solid border-b-8 border-[#AFBE8F] mb-2">

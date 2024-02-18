@@ -10,13 +10,13 @@ const Home = async ({ searchParams }: { searchParams: any }) => {
   const products = await getProductsSearch(searchParams);
 
   return (
-    <div className="mb-14 p-6 text-center">
+    <div className="p-6 text-center pb-24">
       <div className="flex justify-center mb-6 p-0">
         <Suspense fallback={<div className="flex flex-col mx-auto bg-gray-200 animate-pulse w-full h-6 rounded-md"/>}>
-            <SearchBar />
+          <SearchBar/>
         </Suspense>
         <Suspense>
-            <FiltersDrawer/>
+          <FiltersDrawer/>
         </Suspense>
       </div>
       <div className="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-4">

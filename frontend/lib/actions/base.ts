@@ -95,3 +95,36 @@ export const getProductData = async (productSlug: string) => {
 
   return productData;
 }
+
+export const getProductRecommendations = async (productNamesList: any) => {
+  const recommendations:any = []
+
+  for (const name of productNamesList) {
+    const hits = await getProductsSearch({
+      q: name
+    });
+
+    //get specific category of the first hit
+    const category = hits[0].categories[0].split(" ").join("-").toLowerCase()
+    const searchTerm = hits[0].category
+
+    //change the search params to search by category
+    const searchParams = {
+      category: category,
+      q: searchTerm
+    }
+
+    //get the products from the category
+    const products = await getProductsSearch(searchParams);
+    
+    if (products.length <= 0) continue;
+
+    //add each product to the recommendations
+    recommendations.push({
+      because: name,
+      products: products
+    })
+  }
+
+  return recommendations;
+}
