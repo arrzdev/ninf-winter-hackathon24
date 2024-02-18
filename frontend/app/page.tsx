@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <div className='relative p-6'>
-      <h1 className="text-5xl font-bold leading-tight md:text-6xl lg:text-8xl 9xl:text-5xl 9xl:leading-none mt-5 text-center">Bem-Vindo, <span className='text-[#AFBE8F]'>João</span>!</h1>
+      <h1 className="text-4xl font-bold leading-tight md:text-6xl lg:text-8xl 9xl:text-5xl 9xl:leading-none mt-5 text-center">Bem-Vindo, <span className='text-[#AFBE8F]'>João</span>!</h1>
       <div className="pb-24 pt-8 space-y-8  ">
         <div className="pt-4">
           <h1 className="text-3xl font-bold leading-tight md:text-4xl lg:text-6xl 9xl:text-5xl 9xl:leading-none">

@@ -90,16 +90,15 @@ export const removeFromGroceryList = (groceryEntry: any, removeAll = false) => {
 
   //update localstorage data
   localStorage.setItem('GroceryList', JSON.stringify(groceryListData));
-
 }
 
 // get grocery list from localstorage
 export const getGroceryList = () => {
+  // We are on the server, return an empty array
   if (typeof window === 'undefined') {
-    // We are on the server, return an empty array
     return [];
   }
-  
+
   var groceryList: string | null = localStorage.getItem('GroceryList');
 
   if (!groceryList) return [];
