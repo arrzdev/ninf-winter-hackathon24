@@ -131,7 +131,7 @@ const HistoryChart = ({productCurrentPrice}: {
   };
 
   return (
-    <div className='w-full h-40 md:w-64 md:h-56 p-2 bg-[#DDE392] rounded-md border-solid border-2 border-[#AFBE8F]'>
+    <div className='w-full h-40 md:h-56 p-2 bg-[#DDE392] rounded-md border-solid border-2 border-[#AFBE8F]'>
       <Line data={data} options={options} />
     </div>
   );

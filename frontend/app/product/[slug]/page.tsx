@@ -37,7 +37,7 @@ const ProductPage = async ({ params }: any) => {
         </div>
         <div className="pt-4">
           <h1 className="text-2xl font-bold tracking-tight leading-tight md:text-4xl lg:text-3xl 9xl:text-5xl 9xl:leading-none">
-            Histórico de preços
+            Histórico de Preços
           </h1>
           <div className='pt-2'>
             <HistoryChart productCurrentPrice={productData.productInfo.priceMin / 100}/>

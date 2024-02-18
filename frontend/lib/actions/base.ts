@@ -1,7 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-
 // //simple example of protected routes
 // export const amIadmin = async () => {
 //   const adminSession = await useAdminSession();
