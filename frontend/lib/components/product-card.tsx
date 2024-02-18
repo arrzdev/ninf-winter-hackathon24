@@ -5,6 +5,9 @@ import { storeColorMap } from "@/lib/utils"
 import { truncateText } from "@/lib/utils"
 import ShortcutAddGroceriesButton from "./shortcut-add-groceries-button"
 
+
+
+
 const ProductCard = ({ productData }: any) => {
   return (
     <Link href={`/product/${productData.product.slug}`}>

@@ -10,9 +10,17 @@ const ShoppingCart = () => {
     // create useState quantities that is a dictionary with key slug and value quantity from getGroceryList()
     const [groceryList, setGroceryList] = useState(getGroceryList());
 
+    let total = 0;
+    let count = 0;
+    groceryList.forEach((entry: any) => {
+        total += entry.price * entry.quantity;
+        count += entry.quantity;
+    })
+
+    // calculate total and count from groceryList
     const [totalData, setTotalData] = useState({
-        "total": 0,
-        "count": 0
+        "total": (total / 100).toFixed(2),
+        "count": count
     });
 
     return (
@@ -26,7 +34,9 @@ const ShoppingCart = () => {
                         setTotalData={setTotalData}
                     />
                 ))}
-                <ShoppingCartTotalCard data={totalData}/>
+                <ShoppingCartTotalCard
+                    data={totalData}
+                />
             </div>
         </div>
     )

@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBasketShopping, faClockRotateLeft, faMagnifyingGlass, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import './nav-bar.css';
-import { headers } from "next/headers";
 
 
 const NavBar = () => {
