@@ -11,8 +11,6 @@ import {
   Legend,
 } from 'chart.js';
 
-import { getLast90Days } from '../utils';
-
 import { Line } from 'react-chartjs-2';
 import React from 'react'
 
@@ -64,6 +62,19 @@ const generatePriceHistory = (initialPrice: number) => {
   // Certifique-se de que o último preço é o preço inicial
   priceHistory[priceHistory.length - 1] = initialPrice;
   return priceHistory;
+}
+
+export const getLast90Days = () => {
+  let result = [];
+  let today = new Date();
+  for (let i = 0; i <= 90; i += 10) {
+    let pastDate = new Date();
+    pastDate.setDate(today.getDate() - i);
+    let day = String(pastDate.getDate()).padStart(2, '0');
+    let month = String(pastDate.getMonth() + 1).padStart(2, '0'); // Os meses são de 0 a 11, então adicionamos 1
+    result.unshift(`${day}/${month}`);
+  }
+  return result;
 }
 
 const HistoryChart = ({productCurrentPrice}: {
