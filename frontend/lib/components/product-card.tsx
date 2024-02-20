@@ -9,7 +9,7 @@ const ProductCard = ({ productData, sponsored=false }: any) => {
     <Link href={`/product/${productData.product.slug}`}>
       <div className="bg-white rounded-md shadow group relative grid grid-cols-[80px] gap-x-4 p-4 md:flex md:flex-col md:space-y-2">
         <div className="relative">
-          {sponsored && <div className="absolute -top-3 left-[17rem] md:right-2 md:left-auto bg-gray-500 text-white text-xs py-1 px-2 rounded-md">
+          {sponsored && <div className="absolute -top-2 left-[14.5rem] md:right-2 md:left-auto bg-gray-500 text-white text-xs py-1 px-2 rounded-md">
             Patrocinado
           </div>
           }
@@ -30,7 +30,7 @@ const ProductCard = ({ productData, sponsored=false }: any) => {
         </div>
         <div className="flex items-end justify-between col-span-2 pt-2 md:col-start-2">
           <div>
-            <div className="text-neutral-400 text-md whitespace-nowrap">
+            <div className="text-neutral-400 text-xs md:text-md whitespace-nowrap">
               Em <b>{productData.product.storeGroupsCount}</b> supermercado{productData.product.storeGroupsCount > 1 && "s"} desde
             </div>
             <div className="flex items-baseline">

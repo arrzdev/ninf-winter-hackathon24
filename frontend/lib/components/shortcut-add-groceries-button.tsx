@@ -7,12 +7,12 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 const ShortcutAddGroceriesButton = ({ groceriesEntry }: any) => {
   return (
-    <button type="button" className="p-2 px-4 rounded-md bg-[#DDE392]" onClick={(e) => {
+    <button type="button" className="p-1 md:p-2 px-4 rounded-md bg-[#DDE392]" onClick={(e) => {
       e.preventDefault();
       addToGroceryList(groceriesEntry)
     }}>
       Adicionar  
-      <FontAwesomeIcon icon={faBasketShopping} className="ml-2" />
+      <FontAwesomeIcon icon={faBasketShopping} className="pl-2" />
       </button>
   )
 }

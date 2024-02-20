@@ -74,24 +74,20 @@ const FiltersDrawer = () => {
       <DrawerTrigger className="shadow ml-2 px-4 rounded-md bg-[#afbe8f]">
         <FontAwesomeIcon icon={faFilter} size="lg" className="text-white px-1 py-2" />
       </DrawerTrigger>
-      <DrawerContent className="bg-[#afbe8f]">
-        <DrawerHeader>
-          <DrawerTitle className='text-white'>Aqui podes modificar os teus filtros para encontrares o que mais gostas!</DrawerTitle>
-        </DrawerHeader>
-
-        <div className="space-y-4">
+      <DrawerContent className="bg-[#afbe8f] border-0">
+        <div className="space-y-2 md:space-y-4">
           <div className="text-white flex-col items-center space-x-2 px-6">
-            <h3 className="font-bold text-2xl">Ordenar</h3>
+            <h3 className="font-bold text-lg md:text-2xl">Ordenar</h3>
             {[["Relevância", "Products"], ["Menor Preço", "VirtualProductsPriceAsc"], ["Maior Preço", "VirtualProductsPriceDesc"], ["Menor Preço por L/Kg", "VirtualProductsPriceUnitAsc"], ["Maior Preço por L/Kg", "VirtualProductsPriceUnitDesc"]].map(([label, filter], index) => (
               <div className="flex items-left space-x-2 space-y-2 text-left mr-4" key={index}>
-                <Checkbox id={filter} className='mt-1 w-5 h-5' checked={sortFilter == filter} 
+                <Checkbox id={filter} className='mt-1 w-4 h-4 md:w-5 md:h-5' checked={sortFilter == filter} 
                 onCheckedChange={(state) => {
                   state ? setSortFilter(filter) : setSortFilter("");
                 }}
                 />
                 <label
                   htmlFor={filter}
-                  className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm md:text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {capitalizeAndReplace(label)}
                 </label>
@@ -99,16 +95,16 @@ const FiltersDrawer = () => {
             ))}
           </div>
           <div className="text-white flex-col items-center space-x-2 px-6">
-            <h3 className="font-bold text-2xl">Categorias</h3>
+            <h3 className="font-bold text-lg md:text-2xl">Categorias</h3>
             {["alternativas-alimentares", "animais", "bebés", "bebidas", "bricolage-auto-e-jardim", "casa", "charcutaria", "congelados", "frutas-e-legumes", "higiene-e-beleza", "laticínios-e-ovos", "lazer", "mercearia", "padaria-e-pastelaria", "talho-e-peixaria"].map((category, index) => (
               <div className="flex items-left space-x-2 space-y-2 text-left mr-4" key={index}>
-                <Checkbox id={category} className='mt-1 w-5 h-5' checked={categoryFilter == category}
+                <Checkbox id={category} className='mt-1 w-4 h-4 md:w-5 md:h-5' checked={categoryFilter == category}
                   onCheckedChange={(state) => {
                     state ? setCategoryFilter(category) : setCategoryFilter("");
                   }} />
                 <label
                   htmlFor={category}
-                  className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm md:text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {capitalizeAndReplace(category)}
                 </label>
@@ -116,14 +112,14 @@ const FiltersDrawer = () => {
             ))}
           </div>
           <div className="text-white flex-col items-center space-x-2 px-6 pb-10">
-            <h3 className="font-bold text-2xl">Supermercados</h3>
+            <h3 className="font-bold text-lg md:text-2xl">Supermercados</h3>
             {["el-corte-inglés", "continente", "pingo-doce", "auchan"].map((supermarket, index) => (
               <div className="flex items-left space-x-2 space-y-2 text-left mr-4" key={index}>
-                <Checkbox id={supermarket} className='mt-1 w-5 h-5' defaultChecked={superMarketFilters.includes(supermarket)}
+                <Checkbox id={supermarket} className='mt-1 w-4 h-4 md:w-5 md:h-5' defaultChecked={superMarketFilters.includes(supermarket)}
                   onCheckedChange={(state) => updateSuperMarketFilter(supermarket, state)} />
                 <label
                   htmlFor={supermarket}
-                  className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm md:text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {capitalizeAndReplace(supermarket)}
                 </label>

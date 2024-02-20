@@ -5,7 +5,6 @@ const Receipts = async () => {
 
   const receipts = await getReceipts()
 
-  console.log(receipts)
   if (receipts.length === 0) {
     return (<div className="mb-14 p-6 text-center"><h1 className=" text-md font-bold">O serviço poderá estar em baixo de momento..</h1></div>)
   }

@@ -9,8 +9,8 @@ const Loading = () => {
       <div className="flex justify-center mb-6 p-0">
         <Suspense fallback={<div>Loading...</div>}>
           <SearchBar />
+          <FiltersDrawer />
         </Suspense>
-        <FiltersDrawer />
       </div>
       <div className="grid sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {

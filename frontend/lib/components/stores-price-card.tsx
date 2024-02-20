@@ -14,7 +14,7 @@ const StoresPriceCard = ({ stores, productInfo }: IProps) => {
       stores.map((store: IStore, index: number) => (
         <div className={`px-3 border-solid border-[#AFBE8F] rounded-lg bg-[#DDE392] border-2 ${index != stores.length-1 && "rounded-b-none border-b-0"} ${index != 0 && "rounded-t-none"}`} key={index}>
           <div className="flex flex-wrap items-center font-sans w-full gap-2 justify-between px-3 pt-4 pb-3">
-            <div className="order-1 w-1/3 md:w-36">
+            <div className="order-1 w-2/3 md:w-36">
               <div className="font-sans relative flex items-center w-full transition">
                 <h1 className={`${storeColorMap[store.slug]} font-bold text-xl`}>{store.name}</h1>
               </div>

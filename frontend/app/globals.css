@@ -7,6 +7,10 @@
     user-select: none;
   }
 
+    body {
+      @apply bg-[#e6f7cd];
+    }
+
   input::placeholder {
     color: #E6F7CD;
     opacity: 1;
@@ -16,5 +20,13 @@
   /* disable default border on inputs */
   input:focus{
     outline: none !important;
+  }
+}
+
+@layer base {
+
+  * {
+    margin: 0;
+    padding: 0;
   }
 }

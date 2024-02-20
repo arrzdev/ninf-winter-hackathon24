@@ -1,11 +1,12 @@
 {
-  "name": "NEXT APP TEMPLATE",
-  "short_name": "next-template",
-  "description": "Template built using Next14",
+  "name": "COMPARA - Comparador de preços",
+  "short_name": "COMPARA",
+  "description": "Compara preços dos teus produtos favoritos em diferentes lojas",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "theme_color": "#e6f7cd",
+  "background_color": "#e6f7cd",
   "icons": [
     {
       "src": "public/manifest-icon-192.maskable.png",
