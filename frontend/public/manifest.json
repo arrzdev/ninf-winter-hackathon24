@@ -3,7 +3,7 @@
   "short_name": "COMPARA",
   "description": "Compara preços dos teus produtos favoritos em diferentes lojas",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait-primary",
   "theme_color": "#e6f7cd",
   "background_color": "#e6f7cd",
