@@ -19,8 +19,8 @@ const NavBar = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 w-full">
-      <div className="bg-[#afbe8f] p-1 md:p-4 pb-4 md:pb-0 rounded-t-3xl flex justify-center items-center">
+    <div className="fixed bottom-0 left-0 w-full safe-bottom">
+      <div className="bg-[#afbe8f] p-1 md:p-4 pb-2 md:pb-2 rounded-t-3xl flex justify-center items-center">
         <a href="/products">
           <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" className={`${navColor("/products")} mx-6 py-4 navbar-icon`} />
         </a>

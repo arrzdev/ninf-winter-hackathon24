@@ -21,6 +21,10 @@
   input:focus{
     outline: none !important;
   }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @layer base {
