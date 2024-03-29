@@ -5,11 +5,14 @@
 @layer base {
   * {
     user-select: none;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
   }
 
-    body {
-      @apply bg-[#e6f7cd];
-    }
+  body {
+    @apply bg-[#e6f7cd];
+  }
 
   input::placeholder {
     color: #E6F7CD;
@@ -20,17 +23,5 @@
   /* disable default border on inputs */
   input:focus{
     outline: none !important;
-  }
-
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-}
-
-@layer base {
-
-  * {
-    margin: 0;
-    padding: 0;
   }
 }
