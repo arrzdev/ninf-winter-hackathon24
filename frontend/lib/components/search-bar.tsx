@@ -18,10 +18,7 @@ const SearchBar: React.FC = () => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
 
-      window.location.pathname = pathname + "?" + params.toString();
-
-      //this re-triggers the skeletons 
-      window.location.reload();  
+      window.location.search = params.toString();
     },
     [searchParams]
   )
@@ -31,10 +28,7 @@ const SearchBar: React.FC = () => {
       const params = new URLSearchParams(searchParams.toString())
       params.delete(name)
 
-      window.location.pathname = pathname + "?" + params.toString();
-
-      //this re-triggers the skeletons 
-      window.location.reload(); 
+      window.location.search = params.toString();
     },
     [searchParams]
   )

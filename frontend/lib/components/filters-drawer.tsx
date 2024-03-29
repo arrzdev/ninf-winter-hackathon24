@@ -59,8 +59,7 @@ const FiltersDrawer = () => {
     //abort if no changes
     if (initialSearchParams === params.toString()) return;
 
-    const newUrl = pathname + "?" + params.toString();
-    window.location.pathname = newUrl;
+    window.location.search = params.toString();
   }
 
   const capitalizeAndReplace = (str: string) => {
@@ -69,7 +68,7 @@ const FiltersDrawer = () => {
 
   return (
     <Drawer onClose={() => pushFilterUpdates()}>
-      <DrawerTrigger className="shadow ml-2 px-4 rounded-md bg-[#afbe8f]">
+      <DrawerTrigger className="shadow ml-2 px-4 rounded-md bg-[#afbe8f] select-none">
         <FontAwesomeIcon icon={faFilter} size="lg" className="text-white px-1 py-2" />
       </DrawerTrigger>
       <DrawerContent className="bg-[#afbe8f] border-0">
