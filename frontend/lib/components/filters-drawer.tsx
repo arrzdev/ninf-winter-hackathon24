@@ -9,7 +9,7 @@ import {
   DrawerTrigger,
 } from "@/lib/components/ui/drawer"
 import { Checkbox } from './ui/checkbox'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -18,7 +18,6 @@ import { capitalizeText } from '@/lib/utils';
 const FiltersDrawer = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   //save to abort if no changes
   const initialSearchParams = searchParams.toString();
@@ -61,8 +60,7 @@ const FiltersDrawer = () => {
     if (initialSearchParams === params.toString()) return;
 
     const newUrl = pathname + "?" + params.toString();
-    router.push(newUrl);
-    window.location.reload();
+    window.location.pathname = newUrl;
   }
 
   const capitalizeAndReplace = (str: string) => {

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { SearchIcon } from '@/lib/icons/SearchIcon';
@@ -10,7 +9,6 @@ import { debounce } from 'lodash';
 const SearchBar: React.FC = () => {  
   const pathname = usePathname()
   const searchParams = useSearchParams();
-  const router = useRouter();
   const searchBarRef = useRef<HTMLInputElement>(null);
   
   const [showClearButton, setShowClearButton] = useState(searchParams.get("q") ? true : false);
@@ -20,7 +18,7 @@ const SearchBar: React.FC = () => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
 
-      router.push(pathname + "?" + params.toString());
+      window.location.pathname = pathname + "?" + params.toString();
 
       //this re-triggers the skeletons 
       window.location.reload();  
@@ -33,7 +31,7 @@ const SearchBar: React.FC = () => {
       const params = new URLSearchParams(searchParams.toString())
       params.delete(name)
 
-      router.push(pathname + "?" + params.toString());
+      window.location.pathname = pathname + "?" + params.toString();
 
       //this re-triggers the skeletons 
       window.location.reload(); 
