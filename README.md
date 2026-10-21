@@ -10,7 +10,7 @@ Scan your supermarket receipts and see where each product is cheapest.
 - Shopping cart that shows the cheapest store.
 - Spending statistics.
 
-Live demo: https://ninf-winter-hackathon24.vercel.app
+Live demo: https://ninf-winter-hackathon24.andre-arroz-santos.workers.dev
 
 ## Stack
 Next.js 14 · TypeScript · Prisma · Tailwind + Radix UI · Chart.js · Python (Flask, MongoDB)
